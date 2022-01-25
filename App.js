@@ -5,6 +5,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>ClubHub</Text>
+      <Text>IEEE</Text>
       <StatusBar style="auto" />
     </View>
   );
