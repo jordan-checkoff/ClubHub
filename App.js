@@ -5,7 +5,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>ClubHub</Text>
-      <Text>IEEE</Text>
+      <Text style = {styles.club}>IEEE</Text>
       <StatusBar style="auto" />
     </View>
   );
@@ -19,8 +19,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
+
+
   heading: {
     color: 'blue',
 
-  }
+  },
+
+  club: {
+    backgroundColor: "red", 
+
+  },
+
+
 });
