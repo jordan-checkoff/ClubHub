@@ -2,15 +2,15 @@ import React from 'react';
 import {StyleSheet, ScrollView} from 'react-native';
 import ClubListItem from './ClubListItem';
 
-const ClubList = ({clubs, search, filter}) => {
+const ClubList = ({view, clubs, search, filter}) => {
   const courseFilter = function(club) {
     if (filter.length != 0) {
       if (club.name.toLowerCase().includes(search.toLowerCase()) && filter.includes(club.type)) {
-        return <ClubListItem club={club} key={club.name} />
+        return <ClubListItem view={view} club={club} key={club.name} />
       }
     } else {
       if (club.name.toLowerCase().includes(search.toLowerCase())) {
-        return <ClubListItem club={club} key={club.name} />
+        return <ClubListItem view={view} club={club} key={club.name} />
       }
     }
   }

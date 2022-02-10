@@ -1,8 +1,8 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, View, Image, Text} from 'react-native';
 
-const ClubListItem = ({club}) => (
-    <TouchableOpacity style={styles.clubListItem}>
+const ClubListItem = ({view, club}) => (
+    <TouchableOpacity style={styles.clubListItem} onPress={() => view(club)}>
       <View style={styles.clubListBlock1}>
         <Image style={styles.clubListImage} source={{uri: club.icon}}></Image>
       </View>

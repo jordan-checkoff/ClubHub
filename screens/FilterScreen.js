@@ -3,9 +3,8 @@ import FilterContext from '../FilterContext';
 import { StyleSheet, TouchableOpacity, Image, SafeAreaView, View, Text, Button } from 'react-native';
 import FilterButton from '../components/FilterButton';
 
-const FilterScreen = ({navigation, route}) => {
+const FilterScreen = ({navigation}) => {
     const filter = useContext(FilterContext);
-    // const [filter, updateFilter] = useState([]);
 
     return (
         <SafeAreaView style={styles.container}>

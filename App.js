@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {ClubListItem} from './components/ClubListItem';
+import ClubScreen from './screens/ClubScreen';
 import SearchScreen from './screens/SearchScreen';
 import FilterScreen from  './screens/FilterScreen';
 import FilterContext from './FilterContext';
@@ -20,6 +20,9 @@ const [filter, updateFilter] = useState([]);
           />
           <Stack.Screen name="FilterScreen"
             component={FilterScreen}
+          />
+          <Stack.Screen name="ClubScreen"
+            component={ClubScreen}
           />
         </Stack.Navigator>
       </NavigationContainer>

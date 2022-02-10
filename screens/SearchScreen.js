@@ -32,6 +32,9 @@ const database = {
 const SearchScreen = ({navigation, route}) => {
     const [search, updateSearch] = useState('');
 
+    const view = (club) => {
+      navigation.navigate('ClubScreen', { club });
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -46,7 +49,7 @@ const SearchScreen = ({navigation, route}) => {
             />
                 <TouchableOpacity onPress={() => navigation.navigate('FilterScreen')}><Image style={styles.filterButton} source={{uri: "https://cdn4.iconfinder.com/data/icons/basic-user-interface-4/32/Filter-512.png"}}/></TouchableOpacity>
             </View>
-            <ClubList clubs={database.clubList} search={search} filter={route.params ? route.params.filter : []}  /> 
+            <ClubList view={view} clubs={database.clubList} search={search} filter={route.params ? route.params.filter : []}  /> 
         </SafeAreaView>
     );
 }
