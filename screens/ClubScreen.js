@@ -6,7 +6,7 @@ const ClubScreen = ({route}) => {
     const club = route.params.club;
 
     return (
-        //Remember we can only have one parent view. We can have views inside parent
+        //Remember we can only have one parent view. We can have views inside parent!
         <View style={styles.top}>
             <View style={styles.clubHub}>
                 <Text style ={styles.heading}>ClubHub</Text>
