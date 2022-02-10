@@ -29,4 +29,3 @@ const [filter, updateFilter] = useState([]);
     </FilterContext.Provider>
   )
 }
-
