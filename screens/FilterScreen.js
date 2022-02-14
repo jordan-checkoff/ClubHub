@@ -2,7 +2,6 @@ import React, {useContext, useState} from 'react';
 import FilterContext from '../FilterContext';
 import { StyleSheet, TouchableOpacity, Image, SafeAreaView, View, Text, Button } from 'react-native';
 import FilterList from '../components/FilterList';
-import FilterButton from '../components/FilterButton';
 
 const FilterScreen = ({navigation}) => {
     const filter = useContext(FilterContext);
