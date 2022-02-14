@@ -17,22 +17,35 @@ const FilterButton = ( {filter, type}) => {
     return (
         // <Button title={type} onPress={addFilter} style={filter.includes(type) ? styles.selectedFilterButton : styles.filterButton} />
         <TouchableOpacity onPress={addFilter} style={selected ? styles.selectedFilterButton : styles.filterButton}>
-            <Text>{type}</Text>
+            <Text style={styles.text}>{type}</Text>
         </TouchableOpacity>
     )
 }
 
 const styles = StyleSheet.create({
     filterButton: {
-      width: 200,
+      width: "30%",
+      height: 50,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: 20,
+      marginLeft: "1.666%",
+      marginRight: "1.666%",
       backgroundColor: 'lightgray',
-      marginBottom: 20
     },
     selectedFilterButton: {
-        width: 200,
+        width: "30%",
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 20,
+        marginLeft: "1.666%",
+        marginRight: "1.666%",
         backgroundColor: 'gray',
-        marginBottom: 20
       },
+      text: {
+          fontSize: 12,
+      }
   })
 
 export default FilterButton;
