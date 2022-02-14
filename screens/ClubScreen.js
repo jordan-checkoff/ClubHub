@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         height: 100,
     },
     heading:{
-        fontSize: 30,
+        fontSize: 32,
         color: 'black',
         textAlign: 'left',
         fontWeight: "bold",
