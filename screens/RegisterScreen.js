@@ -1,8 +1,9 @@
-import React, {useState } from 'react';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import React, {useState} from 'react';
+import { getAuth, createUserWithEmailAndPassword, setPersistence, browserLocalPersistence } from "firebase/auth";
 import { getDatabase, ref, set } from "firebase/database";
-
-import {TextInput, TouchableOpacity, Text, View} from 'react-native';
+import {TouchableOpacity, Text, View, StyleSheet} from 'react-native';
+import LoginInput from '../components/LoginInput';
+import ErrorText from '../components/ErrorText';
 
 const auth = getAuth();
 
@@ -23,6 +24,21 @@ const RegisterScreen = ({navigation}) => {
             lname: lname,
             email: email
           });
+
+          // setPersistence(auth, browserLocalPersistence)
+          // .then(() => {
+          //   // Existing and future Auth states are now persisted in the current
+          //   // session only. Closing the window would clear any existing state even
+          //   // if a user forgets to sign out.
+          //   // ...
+          //   // New sign-in will be persisted with session persistence.
+          //   return signInWithEmailAndPassword(auth, email, password);
+          // })
+          // .catch((error) => {
+          //   // Handle Errors here.
+          //   const errorCode = error.code;
+          //   const errorMessage = error.message;
+          // });
           
           navigation.navigate('DashboardScreen');
         })
@@ -41,16 +57,53 @@ const RegisterScreen = ({navigation}) => {
   }
 
   return (
-    <View>
-      <Text>{error}</Text>
-      <TextInput placeholder="First Name" value={fname} onChangeText={updateFname}></TextInput>
-      <TextInput placeholder="Last Name" value={lname} onChangeText={updateLname}></TextInput>
-      <TextInput placeholder="Email" value={email} onChangeText={updateEmail}></TextInput>
-      <TextInput placeholder="Password" value={password} onChangeText={updatePassword}></TextInput>
-      <TouchableOpacity onPress={() => register(fname, lname, email, password)}><Text>Register</Text></TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}><Text>Already have an account? Click here to log in.</Text></TouchableOpacity>
+    <View style={styles.container}>
+      <View style={styles.loginbox}>
+        <ErrorText message={error} />
+        <Text style={styles.logintext}>Register</Text>
+        <LoginInput field="First Name" fieldvar={fname} fieldupdate={updateFname} />
+        <LoginInput field="Last Name" fieldvar={lname} fieldupdate={updateLname} />
+        <LoginInput field="Email" fieldvar={email} fieldupdate={updateEmail} />
+        <LoginInput field="Password" fieldvar={password} fieldupdate={updatePassword} />
+        <TouchableOpacity style={styles.loginbutton} onPress={() => register(fname, lname, email, password)}><Text>Register</Text></TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}><Text style={styles.link}>Already have an account? Click here to log in.</Text></TouchableOpacity>
+      </View>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'lightgray',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logintext: {
+    fontSize: 30,
+    textAlign: 'center',
+    marginBottom: 30  
+  },
+  loginbox: {
+      backgroundColor: 'white',
+      width: '80%',
+      padding: 20
+  },
+  buttoncontainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between'
+  },
+  loginbutton: {
+      backgroundColor: '#c65fd9',
+      padding: 10,
+      textAlign: 'center',
+      textColor: 'white',
+      marginBottom: 20
+  },
+  link: {
+      color: 'blue',
+      textAlign: 'center'
+  }
+});
 
 export default RegisterScreen;

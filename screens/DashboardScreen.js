@@ -2,13 +2,9 @@ import React, {useEffect, useState} from 'react';
 import { app } from '../firebase.js';
 import { getAuth } from "firebase/auth";
 import { getDatabase, ref, child, get } from "firebase/database";
-import { Text, View } from 'react-native';
+import { Text, View, TouchableOpacity, Touchable } from 'react-native';
 
-const mapper = (list) => {
-    list.map((item) => <Text>{item}</Text>)
-}
-
-const DashboardScreen = () => {
+const DashboardScreen = ({navigation}) => {
     const auth = getAuth();
     const user = auth.currentUser.uid;
     const [userData, setUserData] = useState('');
@@ -31,7 +27,8 @@ const DashboardScreen = () => {
 
     return (
         <View>
-            {userData ? userData.clubs.map((item) => <Text key={item}>{item}</Text>) : <Text>loading</Text>}
+            <Text>{'Hi ' + userData.fname + ' ' + userData.lname}</Text>
+            <TouchableOpacity onPress={()=> navigation.navigate("SearchScreen")}><Text>Search</Text></TouchableOpacity>
         </View>
     )
 }
