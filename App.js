@@ -4,8 +4,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import ClubScreen from './screens/ClubScreen';
 import SearchScreen from './screens/SearchScreen';
 import FilterScreen from  './screens/FilterScreen';
+import RegisterScreen from  './screens/RegisterScreen';
+import LoginScreen from './screens/LoginScreen';
+import DashboardScreen from './screens/DashboardScreen';
 import FilterContext from './FilterContext';
-import UserContext from './UserContext';
 
 const Stack = createStackNavigator();
 
@@ -15,9 +17,17 @@ const [user, updateUser] = useState('');
 
   return (
     <FilterContext.Provider value={filter}>
-      <UserContext.Provider value={user}>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{headerShown: false}}>
+            <Stack.Screen name="LoginScreen"
+              component={LoginScreen}
+            />
+            <Stack.Screen name="RegisterScreen"
+              component={RegisterScreen}
+            />
+            <Stack.Screen name="DashboardScreen"
+              component={DashboardScreen}
+            />
             <Stack.Screen name="SearchScreen"
               component={SearchScreen}
             />
@@ -29,7 +39,6 @@ const [user, updateUser] = useState('');
             />
           </Stack.Navigator>
         </NavigationContainer>
-      </UserContext.Provider>
     </FilterContext.Provider>
   )
 }
