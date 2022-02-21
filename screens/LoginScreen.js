@@ -1,12 +1,16 @@
-import React, {useState} from 'react';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import React, {useState, useContext} from 'react';
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import {TouchableOpacity, Text, View, StyleSheet} from 'react-native';
 import LoginInput from '../components/LoginInput';
 import ErrorText from '../components/ErrorText';
+import UserContext from '../UserContext';
 
 const auth = getAuth();
 
 const LoginScreen = ({navigation}) => {
+  // const { signIn } = useContext(UserContext);
+  const test = useContext(UserContext);
+
   const [email, updateEmail] = useState("");
   const [password, updatePassword] = useState("");
   const [error, updateError] = useState("");
@@ -15,8 +19,8 @@ const LoginScreen = ({navigation}) => {
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           // const user = userCredential.user;
-
-          navigation.navigate('DashboardScreen');
+          // updateUser(auth.currentUser.uid);
+          // navigation.navigate('DashboardScreen');
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -64,7 +68,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#c65fd9',
         padding: 10,
         textAlign: 'center',
-        textColor: 'white',
+        color: 'white',
         marginBottom: 20
     },
     link: {

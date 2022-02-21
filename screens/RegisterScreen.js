@@ -1,13 +1,17 @@
-import React, {useState} from 'react';
-import { getAuth, createUserWithEmailAndPassword, setPersistence, browserLocalPersistence } from "firebase/auth";
+import React, {useState, useContext} from 'react';
+import { getAuth, createUserWithEmailAndPassword, updateCurrentUser } from "firebase/auth";
 import { getDatabase, ref, set } from "firebase/database";
 import {TouchableOpacity, Text, View, StyleSheet} from 'react-native';
 import LoginInput from '../components/LoginInput';
 import ErrorText from '../components/ErrorText';
+import UserContext from '../UserContext';
 
 const auth = getAuth();
 
 const RegisterScreen = ({navigation}) => {
+  // const [user, updateUser] = useContext(UserContext);
+
+
   const [fname, updateFname] = useState("");
   const [lname, updateLname] = useState("");
   const [email, updateEmail] = useState("");
@@ -24,23 +28,8 @@ const RegisterScreen = ({navigation}) => {
             lname: lname,
             email: email
           });
-
-          // setPersistence(auth, browserLocalPersistence)
-          // .then(() => {
-          //   // Existing and future Auth states are now persisted in the current
-          //   // session only. Closing the window would clear any existing state even
-          //   // if a user forgets to sign out.
-          //   // ...
-          //   // New sign-in will be persisted with session persistence.
-          //   return signInWithEmailAndPassword(auth, email, password);
-          // })
-          // .catch((error) => {
-          //   // Handle Errors here.
-          //   const errorCode = error.code;
-          //   const errorMessage = error.message;
-          // });
-          
-          navigation.navigate('DashboardScreen');
+          // user = auth.currentUser.uid;
+          // navigation.navigate('DashboardScreen');
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -97,7 +86,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#c65fd9',
       padding: 10,
       textAlign: 'center',
-      textColor: 'white',
+      color: 'white',
       marginBottom: 20
   },
   link: {

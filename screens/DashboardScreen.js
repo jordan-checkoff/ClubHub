@@ -1,13 +1,37 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import { app } from '../firebase.js';
-import { getAuth } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 import { getDatabase, ref, child, get } from "firebase/database";
-import { Text, View, TouchableOpacity, Touchable } from 'react-native';
+import { Text, TouchableOpacity, SafeAreaView } from 'react-native';
+import UserContext from '../UserContext';
+
 
 const DashboardScreen = ({navigation}) => {
     const auth = getAuth();
-    const user = auth.currentUser.uid;
+
+    // onAuthStateChanged(auth, (user) => {
+    //     if (user) {
+    //       // User is signed in, see docs for a list of available properties
+    //       // https://firebase.google.com/docs/reference/js/firebase.User
+    //       changeTest("test");
+    //       // ...
+    //     } else {
+    //       // User is signed out
+    //       changeTest(null);
+    //     }
+    //   });
+
+    const user = useContext(UserContext);
     const [userData, setUserData] = useState('');
+
+    const mySignOut = () => {
+        signOut(auth).then(() => {
+            // Sign-out successful.
+            navigation.navigate("LoginScreen");
+          }).catch((error) => {
+            // An error happened.
+          });
+    }
 
     useEffect(() => {
         const dbRef = ref(getDatabase(app));
@@ -26,10 +50,11 @@ const DashboardScreen = ({navigation}) => {
       })
 
     return (
-        <View>
+        <SafeAreaView>
             <Text>{'Hi ' + userData.fname + ' ' + userData.lname}</Text>
             <TouchableOpacity onPress={()=> navigation.navigate("SearchScreen")}><Text>Search</Text></TouchableOpacity>
-        </View>
+            <TouchableOpacity onPress={mySignOut}><Text>Sign Out</Text></TouchableOpacity>
+        </SafeAreaView>
     )
 }
 
