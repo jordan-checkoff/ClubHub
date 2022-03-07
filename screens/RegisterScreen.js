@@ -1,16 +1,13 @@
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
 import { getAuth, createUserWithEmailAndPassword, updateCurrentUser } from "firebase/auth";
 import { getDatabase, ref, set } from "firebase/database";
 import {TouchableOpacity, Text, View, StyleSheet} from 'react-native';
 import LoginInput from '../components/LoginInput';
 import ErrorText from '../components/ErrorText';
-import UserContext from '../UserContext';
 
 const auth = getAuth();
 
 const RegisterScreen = ({navigation}) => {
-  // const [user, updateUser] = useContext(UserContext);
-
 
   const [fname, updateFname] = useState("");
   const [lname, updateLname] = useState("");
@@ -21,15 +18,14 @@ const RegisterScreen = ({navigation}) => {
   const register = (fname, lname, email, password) => {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          // const user = userCredential.user;
+
           const db = getDatabase();
           set(ref(db, 'users/' + auth.currentUser.uid), {
             fname: fname,
             lname: lname,
             email: email
           });
-          // user = auth.currentUser.uid;
-          // navigation.navigate('DashboardScreen');
+
         })
         .catch((error) => {
           const errorCode = error.code;

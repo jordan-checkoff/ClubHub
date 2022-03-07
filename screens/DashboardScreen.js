@@ -9,18 +9,6 @@ import UserContext from '../UserContext';
 const DashboardScreen = ({navigation}) => {
     const auth = getAuth();
 
-    // onAuthStateChanged(auth, (user) => {
-    //     if (user) {
-    //       // User is signed in, see docs for a list of available properties
-    //       // https://firebase.google.com/docs/reference/js/firebase.User
-    //       changeTest("test");
-    //       // ...
-    //     } else {
-    //       // User is signed out
-    //       changeTest(null);
-    //     }
-    //   });
-
     const user = useContext(UserContext);
     const [userData, setUserData] = useState('');
 
