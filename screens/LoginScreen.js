@@ -1,15 +1,12 @@
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import {TouchableOpacity, Text, View, StyleSheet} from 'react-native';
 import LoginInput from '../components/LoginInput';
 import ErrorText from '../components/ErrorText';
-import UserContext from '../UserContext';
 
 const auth = getAuth();
 
 const LoginScreen = ({navigation}) => {
-  // const { signIn } = useContext(UserContext);
-  const test = useContext(UserContext);
 
   const [email, updateEmail] = useState("");
   const [password, updatePassword] = useState("");
@@ -18,9 +15,7 @@ const LoginScreen = ({navigation}) => {
   const login = (email, password) => {
     signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          // const user = userCredential.user;
-          // updateUser(auth.currentUser.uid);
-          // navigation.navigate('DashboardScreen');
+
         })
         .catch((error) => {
           const errorCode = error.code;
