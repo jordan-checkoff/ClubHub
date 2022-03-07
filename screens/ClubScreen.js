@@ -3,13 +3,14 @@ import reactDom from 'react-dom';
 import {Text} from 'react-native';
 import { StyleSheet, TouchableOpacity, Image, SafeAreaView, View, Button } from 'react-native';
 
-const ClubScreen = ({route}) => {
+const ClubScreen = ({route, navigation}) => {
     const club = route.params.club;
 
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.clubscreen}>
                 <View style={styles.clubHub}>
+                    <TouchableOpacity onPress={() => navigation.navigate('SearchScreen')}><Text>back</Text></TouchableOpacity>
                     <Text style ={styles.heading}>{club.name}</Text>
                     <Image style={styles.profile}source={require('../assets/boomshaka.png')} />
                 </View>
