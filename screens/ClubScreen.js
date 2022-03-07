@@ -17,7 +17,7 @@ const ClubScreen = ({route}) => {
                     <Text style ={styles.title}>{club.name} Northwestern University</Text>
                     <Text style ={styles.username}>@{club.name}</Text>
                     <Text style ={styles.type}>Dance</Text>
-                    <Text>{club.description}</Text>
+                    <Text style = {styles.info}>{club.description}</Text>
                     <Text>Northwestern University's premier drum, dance, and rhythm ensemble.</Text>
                 </View>
                 <View style ={styles.followers}>
