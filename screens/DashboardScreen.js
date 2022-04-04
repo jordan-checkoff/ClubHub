@@ -2,7 +2,7 @@ import React, {useEffect, useState, useContext} from 'react';
 import { app } from '../firebase.js';
 import { getAuth, signOut } from "firebase/auth";
 import { getDatabase, ref, child, get } from "firebase/database";
-import { Text, TouchableOpacity, SafeAreaView } from 'react-native';
+import { Text, TouchableOpacity, SafeAreaView, View } from 'react-native';
 import UserContext from '../UserContext';
 
 
@@ -10,7 +10,8 @@ const DashboardScreen = ({navigation}) => {
     const auth = getAuth();
 
     const user = useContext(UserContext);
-    const [userData, setUserData] = useState('');
+    const [userData, setUserData] = useState([]);
+    const [following, setFollowing] = useState([]);
 
     const mySignOut = () => {
         signOut(auth).then(() => {
@@ -28,6 +29,7 @@ const DashboardScreen = ({navigation}) => {
             get(child(dbRef, 'users/' + user)).then((snapshot) => {
                 if (snapshot.exists()) {
                 setUserData(snapshot.val());
+                setFollowing(Object.keys(snapshot.val().following));
                 } else {
                 console.log("No data available");
                 }
@@ -40,6 +42,7 @@ const DashboardScreen = ({navigation}) => {
     return (
         <SafeAreaView>
             <Text>{'Hi ' + userData.fname + ' ' + userData.lname}</Text>
+            {following.map((name) => <Text key={name}>{name}</Text>)}
             <TouchableOpacity onPress={()=> navigation.navigate("SearchScreen")}><Text>Search</Text></TouchableOpacity>
             <TouchableOpacity onPress={mySignOut}><Text>Sign Out</Text></TouchableOpacity>
         </SafeAreaView>

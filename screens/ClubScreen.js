@@ -1,10 +1,44 @@
-import React from 'react';
-import reactDom from 'react-dom';
+import React, {useContext, useState, useEffect} from 'react';
 import {Text} from 'react-native';
 import { StyleSheet, TouchableOpacity, Image, SafeAreaView, View, Button } from 'react-native';
+import { getDatabase, ref, update, get, child, remove} from "firebase/database";
+import UserContext from '../UserContext';
+import {app} from '../firebase'
 
 const ClubScreen = ({route, navigation}) => {
+    const db = getDatabase();
     const club = route.params.club;
+    const user = useContext(UserContext);
+    const [following, setFollowing] = useState(false);
+
+    useEffect(() => {
+        const dbRef = ref(getDatabase(app));
+
+        if (user) {
+            get(child(dbRef, 'users/' + user + '/following/' + club.name)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    setFollowing(true);
+                } else {
+                    setFollowing(false);
+                }
+            }).catch((error) => {
+                console.error(error);
+            })
+        }
+      })
+
+    const follow = (name) => {
+
+        if (following) {
+            remove(ref(db, 'users/' + user + '/following/' + club.name));
+            setFollowing(false);
+        } else {
+            const updates = {};
+            updates['users/' + user + '/following/' + name] = true;
+            update(ref(db), updates);
+            setFollowing(true);
+        }
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -18,6 +52,7 @@ const ClubScreen = ({route, navigation}) => {
                     <Text style ={styles.title}>{club.name} Northwestern University</Text>
                     <Text style ={styles.username}>@{club.name}</Text>
                     <Text style ={styles.type}>Dance</Text>
+                    <TouchableOpacity onPress={() => follow(club.name)}><Text>{following ? 'Following' : 'Follow'}</Text></TouchableOpacity>
                     <Text style = {styles.info}>{club.description}</Text>
                     <Text>Northwestern University's premier drum, dance, and rhythm ensemble.</Text>
                 </View>
