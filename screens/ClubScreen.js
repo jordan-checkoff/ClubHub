@@ -10,6 +10,7 @@ const ClubScreen = ({route, navigation}) => {
     const club = route.params.club;
     const user = useContext(UserContext);
     const [following, setFollowing] = useState(false);
+    const [admin, setAdmin] = useState(false);
 
     useEffect(() => {
         const dbRef = ref(getDatabase(app));
@@ -20,6 +21,15 @@ const ClubScreen = ({route, navigation}) => {
                     setFollowing(true);
                 } else {
                     setFollowing(false);
+                }
+            }).catch((error) => {
+                console.error(error);
+            })
+            get(child(dbRef, 'clubAdmins/' + club.name + '/' + user)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    setAdmin(true);
+                } else {
+                    setAdmin(false);
                 }
             }).catch((error) => {
                 console.error(error);
@@ -53,6 +63,7 @@ const ClubScreen = ({route, navigation}) => {
                     <Text style ={styles.username}>@{club.name}</Text>
                     <Text style ={styles.type}>Dance</Text>
                     <TouchableOpacity onPress={() => follow(club.name)}><Text>{following ? 'Following' : 'Follow'}</Text></TouchableOpacity>
+                    <Text>{admin && "Admin"}</Text>
                     <Text style = {styles.info}>{club.description}</Text>
                     <Text>Northwestern University's premier drum, dance, and rhythm ensemble.</Text>
                 </View>

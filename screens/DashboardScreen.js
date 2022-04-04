@@ -28,8 +28,10 @@ const DashboardScreen = ({navigation}) => {
         if (user) {
             get(child(dbRef, 'users/' + user)).then((snapshot) => {
                 if (snapshot.exists()) {
-                setUserData(snapshot.val());
-                setFollowing(Object.keys(snapshot.val().following));
+                    setUserData(snapshot.val());
+                    if (snapshot.val().following) {
+                        setFollowing(Object.keys(snapshot.val().following));
+                    }
                 } else {
                 console.log("No data available");
                 }
