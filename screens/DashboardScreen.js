@@ -11,7 +11,6 @@ const DashboardScreen = ({navigation}) => {
 
     const user = useContext(UserContext);
     const [userData, setUserData] = useState([]);
-    const [following, setFollowing] = useState([]);
 
     const mySignOut = () => {
         signOut(auth).then(() => {
@@ -29,9 +28,6 @@ const DashboardScreen = ({navigation}) => {
             get(child(dbRef, 'users/' + user)).then((snapshot) => {
                 if (snapshot.exists()) {
                     setUserData(snapshot.val());
-                    if (snapshot.val().following) {
-                        setFollowing(Object.keys(snapshot.val().following));
-                    }
                 } else {
                 console.log("No data available");
                 }
@@ -44,7 +40,7 @@ const DashboardScreen = ({navigation}) => {
     return (
         <SafeAreaView>
             <Text>{'Hi ' + userData.fname + ' ' + userData.lname}</Text>
-            {following.map((name) => <Text key={name}>{name}</Text>)}
+            {userData.following && Object.values(userData.following).map((name) => <Text key={name}>{name}</Text>)}
             <TouchableOpacity onPress={()=> navigation.navigate("SearchScreen")}><Text>Search</Text></TouchableOpacity>
             <TouchableOpacity onPress={mySignOut}><Text>Sign Out</Text></TouchableOpacity>
         </SafeAreaView>
