@@ -32,6 +32,7 @@ const SearchScreen = ({navigation, route}) => {
   return (
       <SafeAreaView style={styles.container}>
           <View style={styles.searchBox}>
+              <TouchableOpacity onPress={() => navigation.navigate('DashboardScreen')}><Image style={styles.filterButton} source={{uri: "https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_home_48px-1024.png"}}/></TouchableOpacity>
               <SearchBar
               placeholder="Search"
               onChangeText={updateSearch}
@@ -39,7 +40,7 @@ const SearchScreen = ({navigation, route}) => {
               round
               containerStyle={styles.searchBarOuter}
               inputContainerStyle={styles.searchBarInner}
-          />
+              />
               <TouchableOpacity onPress={() => navigation.navigate('FilterScreen')}><Image style={styles.filterButton} source={{uri: "https://cdn4.iconfinder.com/data/icons/basic-user-interface-4/32/Filter-512.png"}}/></TouchableOpacity>
           </View>
           <ClubList view={view} clubs={clubList} search={search} filter={route.params ? route.params.filter : []}  /> 

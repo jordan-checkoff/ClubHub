@@ -12,7 +12,6 @@ const DashboardScreen = ({navigation}) => {
 
     const user = useContext(UserContext);
     const [userData, setUserData] = useState([]);
-    const [following, setFollowing] = useState([]);
 
     const mySignOut = () => {
         signOut(auth).then(() => {
@@ -29,8 +28,7 @@ const DashboardScreen = ({navigation}) => {
         if (user) {
             get(child(dbRef, 'users/' + user)).then((snapshot) => {
                 if (snapshot.exists()) {
-                setUserData(snapshot.val());
-                setFollowing(Object.keys(snapshot.val().following));
+                    setUserData(snapshot.val());
                 } else {
                 console.log("No data available");
                 }

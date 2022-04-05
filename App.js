@@ -8,6 +8,7 @@ import RegisterScreen from  './screens/RegisterScreen';
 import LoginScreen from './screens/LoginScreen';
 import DashboardScreen from './screens/DashboardScreen';
 import LoadingScreen from './screens/LoadingScreen';
+import EventScreen from './screens/EventScreen';
 import FilterContext from './FilterContext';
 import UserContext from './UserContext';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -46,9 +47,10 @@ onAuthStateChanged(auth, (user) => {
           <Stack.Navigator screenOptions={{headerShown: false}}>
           {user == null ? (
             <>
-              <Stack.Screen name={"LoginScreen"} component={LoginScreen} />
+              <Stack.Screen name={"LoginScreen"} 
+                component={LoginScreen} />
               <Stack.Screen name="RegisterScreen"
-              component={RegisterScreen}/>
+                component={RegisterScreen}/>
             </>
             ) : (
               <>
@@ -63,6 +65,9 @@ onAuthStateChanged(auth, (user) => {
             />
             <Stack.Screen name="ClubScreen"
               component={ClubScreen}
+            />
+            <Stack.Screen name="EventScreen"
+              component={EventScreen}
             />
             </>
             )}
