@@ -79,6 +79,7 @@ const ClubScreen = ({route, navigation}) => {
                     <Text style ={styles.type}>Dance</Text>
                     <TouchableOpacity onPress={follow}><Text>{following ? 'Following' : 'Follow'}</Text></TouchableOpacity>
                     <Text>{admin && "Admin"}</Text>
+                    {admin && <TouchableOpacity onPress={() => navigation.navigate("EventScreen", {club: club.name})}><Text>Create Event</Text></TouchableOpacity>}
                     <Text style = {styles.info}>{club.description}</Text>
                     <Text>Northwestern University's premier drum, dance, and rhythm ensemble.</Text>
                 </View>
