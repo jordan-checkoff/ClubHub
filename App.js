@@ -46,9 +46,10 @@ onAuthStateChanged(auth, (user) => {
           <Stack.Navigator screenOptions={{headerShown: false}}>
           {user == null ? (
             <>
-              <Stack.Screen name={"LoginScreen"} component={LoginScreen} />
+              <Stack.Screen name={"LoginScreen"} 
+                component={LoginScreen} />
               <Stack.Screen name="RegisterScreen"
-              component={RegisterScreen}/>
+                component={RegisterScreen}/>
             </>
             ) : (
               <>

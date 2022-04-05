@@ -15,7 +15,7 @@ const FilterScreen = ({navigation}) => {
                     <Image style={styles.filterButton} source={{uri: "https://icons-for-free.com/iconfiles/png/512/x-1321215629555778185.png"}}/>
                 </TouchableOpacity>
             </View>
-            <FilterList filter={filter} types={types} />
+            <FilterList filter={filter} types={types}/>
         </SafeAreaView>
     );
 }
