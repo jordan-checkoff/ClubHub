@@ -1,41 +1,66 @@
 import React, {useContext, useState, useEffect} from 'react';
 import {Text} from 'react-native';
 import { StyleSheet, TouchableOpacity, Image, SafeAreaView, View, Button } from 'react-native';
-import { getDatabase, ref, update, get, child, remove} from "firebase/database";
+import { getDatabase, ref, get, child, update, push, set, remove} from "firebase/database";
 import UserContext from '../UserContext';
 import {app} from '../firebase'
+import { updateCurrentUser } from 'firebase/auth';
 
 const ClubScreen = ({route, navigation}) => {
     const db = getDatabase();
     const club = route.params.club;
     const user = useContext(UserContext);
     const [following, setFollowing] = useState(false);
+    const [admin, setAdmin] = useState(false);
 
     useEffect(() => {
         const dbRef = ref(getDatabase(app));
-
         if (user) {
-            get(child(dbRef, 'users/' + user + '/following/' + club.name)).then((snapshot) => {
+            get(child(dbRef, 'users/' + user + '/following')).then((snapshot) => {
                 if (snapshot.exists()) {
-                    setFollowing(true);
+                    if (Object.values(snapshot.val()).includes(club.name)) {
+                        setFollowing(true);
+                    } else {
+                        setFollowing(false);
+                    }
                 } else {
                     setFollowing(false);
                 }
             }).catch((error) => {
                 console.error(error);
-            })
+            });
+            get(child(dbRef, "users/" + user + '/admin')).then((snapshot) => {
+                if (snapshot.exists()) {
+                    if (Object.values(snapshot.val()).includes(club.name)) {
+                        setAdmin(true);
+                    } else {
+                        setAdmin(false);
+                    }
+                }
+            }).catch((error) => {
+                console.error(error);
+            });
         }
       })
 
-    const follow = (name) => {
-
+    const follow = () => {
         if (following) {
-            remove(ref(db, 'users/' + user + '/following/' + club.name));
+            const dbRef = ref(getDatabase(app));
+            get(child(dbRef, 'users/' + user + '/following')).then((snapshot) => {
+                if (snapshot.exists()) {
+                    let following = snapshot.val();
+                    let key = Object.keys(following).find(key => following[key] === club.name);
+                    const postListRef = ref(db, 'users/' + user + '/following/' + key);
+                    remove(postListRef);
+                }
+            }).catch((error) => {
+                console.error(error);
+            })
             setFollowing(false);
         } else {
-            const updates = {};
-            updates['users/' + user + '/following/' + name] = true;
-            update(ref(db), updates);
+            const postListRef = ref(db, 'users/' + user + '/following');
+            const newPostRef = push(postListRef);
+            set(newPostRef, club.name);
             setFollowing(true);
         }
     }
@@ -52,7 +77,8 @@ const ClubScreen = ({route, navigation}) => {
                     <Text style ={styles.title}>{club.name} Northwestern University</Text>
                     <Text style ={styles.username}>@{club.name}</Text>
                     <Text style ={styles.type}>Dance</Text>
-                    <TouchableOpacity onPress={() => follow(club.name)}><Text>{following ? 'Following' : 'Follow'}</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={follow}><Text>{following ? 'Following' : 'Follow'}</Text></TouchableOpacity>
+                    <Text>{admin && "Admin"}</Text>
                     <Text style = {styles.info}>{club.description}</Text>
                     <Text>Northwestern University's premier drum, dance, and rhythm ensemble.</Text>
                 </View>
