@@ -54,9 +54,6 @@ onAuthStateChanged(auth, (user) => {
             </>
             ) : (
               <>
-            <Stack.Screen name="DashboardScreen"
-              component={DashboardScreen}
-            />
             <Stack.Screen name="SearchScreen"
               component={SearchScreen}
             />
