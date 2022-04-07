@@ -5,10 +5,10 @@ import { StyleSheet, View, SafeAreaView, Image, TouchableOpacity, Text } from 'r
 import ClubList from './ClubList';
 
 
-const SearchScreen = ({navigation, route, search, clubList, filter}) => {
+const SearchScreen = ({nav, search, clubList, filter}) => {
 
     const view = (club) => {
-      navigation.navigate('ClubScreen', { club });
+      nav.navigate('ClubScreen', { club });
     };
   
     return (
