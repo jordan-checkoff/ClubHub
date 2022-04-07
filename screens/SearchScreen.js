@@ -11,33 +11,34 @@ import UserContext from '../UserContext';
 const SearchScreen = ({navigation, route}) => {
 
   const user = useContext(UserContext);
-  const [clubList, setClubList] = useState([]);
-  const [userData, setUserData] = useState([]);
+  const [data, updateData] = useState({clubList: {}, userData: {}});
 
   useEffect(() => {
+    let userData = {};
+    let clubList = {};
     const dbRef = ref(getDatabase(app));
 
     get(child(dbRef, 'clubList')).then((snapshot) => {
       if (snapshot.exists()) {
-        setClubList(snapshot.val());
+        clubList = snapshot.val();
       } else {
         console.log("No data available");
       }
+
+        get(child(dbRef, 'users/' + user)).then((snapshot) => {
+          if (snapshot.exists()) {
+            userData = snapshot.val();
+            updateData({clubList: clubList, userData: userData});
+          } else {
+            console.log("No data available");
+          }
+        }).catch((error) => {
+          console.error(error);
+        });
+
     }).catch((error) => {
       console.error(error);
     });
-    
-    if (user) {
-      get(child(dbRef, 'users/' + user)).then((snapshot) => {
-          if (snapshot.exists()) {
-          setUserData(snapshot.val());
-          } else {
-          console.log("No data available");
-          }
-      }).catch((error) => {
-          console.error(error);
-      })
-  }
 
   })
 
@@ -63,7 +64,7 @@ const SearchScreen = ({navigation, route}) => {
               />
               <TouchableOpacity onPress={() => navigation.navigate('FilterScreen')}><Image style={styles.filterButton} source={{uri: "https://cdn4.iconfinder.com/data/icons/basic-user-interface-4/32/Filter-512.png"}}/></TouchableOpacity>
           </View>
-          {dashboard ? <DashboardComp userData={userData} />: <SearchComp nav={navigation} search={search} filter={route.params ? route.params.filter : [] } clubList={clubList}/> }
+          {dashboard ? <DashboardComp userData={data.userData} />: <SearchComp nav={navigation} search={search} filter={route.params ? route.params.filter : [] } clubList={data.clubList}/> }
       </SafeAreaView>
   );
 }
