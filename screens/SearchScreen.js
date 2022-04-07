@@ -8,6 +8,7 @@ import SearchComp from '../components/SearchComp';
 
 
 
+
 const SearchScreen = ({navigation, route}) => {
 
   const [clubList, setClubList] = useState([]);
@@ -35,23 +36,23 @@ const SearchScreen = ({navigation, route}) => {
   };
 
   return (
-      <SafeAreaView style={styles.container}>
-          <View style={styles.searchBox}>
-              <TouchableOpacity onPress={() => navigation.navigate('DashboardScreen')}><Image style={styles.filterButton} source={{uri: "https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_home_48px-1024.png"}}/></TouchableOpacity>
-              <SearchBar
-              placeholder="Search"
-              onFocus={() => updateDashboard(false)}
-              onBlur={() => updateDashboard(true)}
-              onChangeText={updateSearch}
-              value={search}
-              round
-              containerStyle={styles.searchBarOuter}
-              inputContainerStyle={styles.searchBarInner}
-              />
-              <TouchableOpacity onPress={() => navigation.navigate('FilterScreen')}><Image style={styles.filterButton} source={{uri: "https://cdn4.iconfinder.com/data/icons/basic-user-interface-4/32/Filter-512.png"}}/></TouchableOpacity>
-          </View>
-          {dashboard ? <DashboardComp />: <SearchComp search={search}/>}
-      </SafeAreaView>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.searchBox}>
+            <TouchableOpacity onPress={() => navigation.navigate('DashboardScreen')}><Image style={styles.filterButton} source={{uri: "https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_home_48px-1024.png"}}/></TouchableOpacity>
+            <SearchBar
+            placeholder="Search"
+            onFocus={() => updateDashboard(false)}
+            onBlur={() => updateDashboard(true)}
+            onChangeText={updateSearch}
+            value={search}
+            round
+            containerStyle={styles.searchBarOuter}
+            inputContainerStyle={styles.searchBarInner}
+            />
+            <TouchableOpacity onPress={() => navigation.navigate('FilterScreen')}><Image style={styles.filterButton} source={{uri: "https://cdn4.iconfinder.com/data/icons/basic-user-interface-4/32/Filter-512.png"}}/></TouchableOpacity>
+        </View>
+        {dashboard ? <DashboardComp />: <SearchComp search={search}/>}
+  </SafeAreaView>    
   );
 }
 
@@ -61,6 +62,9 @@ const styles = StyleSheet.create({
       backgroundColor: '#c65fd9',
       alignItems: 'center',
       justifyContent: 'center',
+    },
+    scrolling:{
+      height: 100,
     },
     searchBox: {
       width: '100%',
