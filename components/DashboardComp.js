@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#c65fd9',
       alignItems: 'center',
       justifyContent: 'center',
+      width: '95%',
     },
 
 
