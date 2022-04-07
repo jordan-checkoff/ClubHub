@@ -53,7 +53,7 @@ const SearchScreen = ({navigation, route}) => {
   return (
       <SafeAreaView style={styles.container}>
           <View style={styles.searchBox}>
-              <TouchableOpacity onPress={() => updateDashboard(true)}><Image style={styles.filterButton} source={{uri: "https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_home_48px-1024.png"}}/></TouchableOpacity>
+              <TouchableOpacity onPress={() => updateDashboard(true)}><Image style={styles.searchBarIcons} source={{uri: "https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_home_48px-1024.png"}}/></TouchableOpacity>
               <SearchBar
               placeholder="Search"
               onFocus={() => updateDashboard(false)}
@@ -63,7 +63,7 @@ const SearchScreen = ({navigation, route}) => {
               containerStyle={styles.searchBarOuter}
               inputContainerStyle={styles.searchBarInner}
               />
-              <TouchableOpacity onPress={() => navigation.navigate('FilterScreen')}><Image style={styles.filterButton} source={{uri: "https://cdn4.iconfinder.com/data/icons/basic-user-interface-4/32/Filter-512.png"}}/></TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate('FilterScreen')}><Image style={styles.searchBarIcons} source={{uri: "https://cdn4.iconfinder.com/data/icons/basic-user-interface-4/32/Filter-512.png"}}/></TouchableOpacity>
           </View>
           {dashboard ? <DashboardComp userData={data.userData} />: <SearchComp nav={navigation} search={search} filter={route.params ? route.params.filter : [] } clubList={data.clubList}/> }
       </SafeAreaView>
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
       borderTopWidth: 0,
       borderBottomWidth: 0,
       height: 5,
-      width: '95%',
+      width: '90%',
       position: 'relative',
       top: -15
     },
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
       height: 20,
       width: '100%',
     },
-    filterButton: {
+    searchBarIcons: {
       width: 20,
       height: 20
     }
