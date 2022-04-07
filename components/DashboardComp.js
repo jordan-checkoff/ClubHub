@@ -2,12 +2,13 @@ import React, {useEffect, useState, useContext} from 'react';
 import { app } from '../firebase.js';
 import { getAuth, signOut } from "firebase/auth";
 import { getDatabase, ref, child, get } from "firebase/database";
-import { StyleSheet, Text, TouchableOpacity, SafeAreaView, View, Pressable } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, SafeAreaView, View, Pressable, ScrollView, Image } from 'react-native';
+import FollowingBox from './followingBox';
 
 
 
 
-const DashboardScreen = ({navigation, userData}) => {
+const DashboardScreen = ({navigation, userData, view, club}) => {
     const auth = getAuth();
 
     const mySignOut = () => {
@@ -26,8 +27,9 @@ return (
                 <View style={styles.followListTop}>
                     <Text style={styles.followingTopText}>Following</Text>
                 </View>
-                <View style={styles.followListContent}>
-                </View>
+                <ScrollView style={styles.followListContent}>
+                    <FollowingBox following={userData.following}/>
+                </ScrollView>
             </View>
             <View style={styles.eventListContainer}> 
                 <View style={styles.followListTop}>
@@ -40,7 +42,6 @@ return (
                 <Text>{'Hi ' + userData.fname + ' ' + userData.lname}</Text>
                 <TouchableOpacity onPress={mySignOut}><Text>Sign Out</Text></TouchableOpacity>
             </View>
-            <View>{userData.following && Object.values(userData.following).map((name) => <Text key={name}>{name}</Text>)}</View>
         </SafeAreaView>
     );
 }
@@ -86,6 +87,19 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         height: 200,
         width: '95%',
+    },
+    followingClub:{
+        flexDirection: 'row',
+        height: 60,
+        padding: 20,
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+        borderColor: 'gray',
+        backgroundColor: 'white',
+    },
+    clubListBlock1:{
+        flex: 1,
+        justifyContent: 'center',
     }
 });
 export default DashboardScreen;
