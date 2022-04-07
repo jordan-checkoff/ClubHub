@@ -12,7 +12,6 @@ const DashboardScreen = ({navigation}) => {
 
     const user = useContext(UserContext);
     const [userData, setUserData] = useState([]);
-    const [following, setFollowing] = useState([]);
 
     const mySignOut = () => {
         signOut(auth).then(() => {
@@ -30,7 +29,6 @@ const DashboardScreen = ({navigation}) => {
             get(child(dbRef, 'users/' + user)).then((snapshot) => {
                 if (snapshot.exists()) {
                 setUserData(snapshot.val());
-                setFollowing(Object.keys(snapshot.val().following));
                 } else {
                 console.log("No data available");
                 }
@@ -61,7 +59,7 @@ return (
                 <Text>{'Hi ' + userData.fname + ' ' + userData.lname}</Text>
                 <TouchableOpacity onPress={mySignOut}><Text>Sign Out</Text></TouchableOpacity>
             </View>
-            <View>{following.map((name) => <Text key={name}>{name}</Text>)}</View>
+            <View>{userData.following && Object.values(userData.following).map((name) => <Text key={name}>{name}</Text>)}</View>
         </SafeAreaView>
     );
 }
@@ -72,8 +70,8 @@ const styles = StyleSheet.create({
       backgroundColor: '#c65fd9',
       alignItems: 'center',
       justifyContent: 'center',
+      width: '95%',
     },
-
 
     followListContainer: {
         borderRadius: 10,
