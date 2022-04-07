@@ -3,15 +3,12 @@ import { app } from '../firebase.js';
 import { getAuth, signOut } from "firebase/auth";
 import { getDatabase, ref, child, get } from "firebase/database";
 import { StyleSheet, Text, TouchableOpacity, SafeAreaView, View, Pressable } from 'react-native';
-import UserContext from '../UserContext';
 
 
 
-const DashboardScreen = ({navigation}) => {
+
+const DashboardScreen = ({navigation, userData}) => {
     const auth = getAuth();
-
-    const user = useContext(UserContext);
-    const [userData, setUserData] = useState([]);
 
     const mySignOut = () => {
         signOut(auth).then(() => {
@@ -21,22 +18,6 @@ const DashboardScreen = ({navigation}) => {
             // An error happened.
           });
     }
-
-    useEffect(() => {
-        const dbRef = ref(getDatabase(app));
-
-        if (user) {
-            get(child(dbRef, 'users/' + user)).then((snapshot) => {
-                if (snapshot.exists()) {
-                setUserData(snapshot.val());
-                } else {
-                console.log("No data available");
-                }
-            }).catch((error) => {
-                console.error(error);
-            })
-        }
-      })
 
 
 return (

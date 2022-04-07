@@ -1,16 +1,18 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { app } from '../firebase.js';
 import { getDatabase, ref, child, get } from "firebase/database";
 import { SearchBar } from 'react-native-elements';
 import { StyleSheet, View, SafeAreaView, Image, TouchableOpacity, Text } from 'react-native';
 import DashboardComp from '../components/DashboardComp';
 import SearchComp from '../components/SearchComp';
-
+import UserContext from '../UserContext';
 
 
 const SearchScreen = ({navigation, route}) => {
 
+  const user = useContext(UserContext);
   const [clubList, setClubList] = useState([]);
+  const [userData, setUserData] = useState([]);
 
   useEffect(() => {
     const dbRef = ref(getDatabase(app));
@@ -24,11 +26,23 @@ const SearchScreen = ({navigation, route}) => {
     }).catch((error) => {
       console.error(error);
     });
+    
+    if (user) {
+      get(child(dbRef, 'users/' + user)).then((snapshot) => {
+          if (snapshot.exists()) {
+          setUserData(snapshot.val());
+          } else {
+          console.log("No data available");
+          }
+      }).catch((error) => {
+          console.error(error);
+      })
+  }
+
   })
 
   const [search, updateSearch] = useState('');
   const [dashboard, updateDashboard] = useState(true);
-
 
   const view = (club) => {
     navigation.navigate('ClubScreen', { club });
@@ -37,11 +51,10 @@ const SearchScreen = ({navigation, route}) => {
   return (
       <SafeAreaView style={styles.container}>
           <View style={styles.searchBox}>
-              <TouchableOpacity onPress={() => navigation.navigate('DashboardScreen')}><Image style={styles.filterButton} source={{uri: "https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_home_48px-1024.png"}}/></TouchableOpacity>
+              <TouchableOpacity onPress={() => updateDashboard(true)}><Image style={styles.filterButton} source={{uri: "https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_home_48px-1024.png"}}/></TouchableOpacity>
               <SearchBar
               placeholder="Search"
               onFocus={() => updateDashboard(false)}
-              onBlur={() => updateDashboard(true)}
               onChangeText={updateSearch}
               value={search}
               round
@@ -50,7 +63,7 @@ const SearchScreen = ({navigation, route}) => {
               />
               <TouchableOpacity onPress={() => navigation.navigate('FilterScreen')}><Image style={styles.filterButton} source={{uri: "https://cdn4.iconfinder.com/data/icons/basic-user-interface-4/32/Filter-512.png"}}/></TouchableOpacity>
           </View>
-          {dashboard ? <DashboardComp />: <SearchComp search={search}/>}
+          {dashboard ? <DashboardComp userData={userData} />: <SearchComp search={search} filter={route.params ? route.params.filter : [] } clubList={clubList}/> }
       </SafeAreaView>
   );
 }
