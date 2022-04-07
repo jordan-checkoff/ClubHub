@@ -63,7 +63,7 @@ const SearchScreen = ({navigation, route}) => {
               />
               <TouchableOpacity onPress={() => navigation.navigate('FilterScreen')}><Image style={styles.filterButton} source={{uri: "https://cdn4.iconfinder.com/data/icons/basic-user-interface-4/32/Filter-512.png"}}/></TouchableOpacity>
           </View>
-          {dashboard ? <DashboardComp userData={userData} />: <SearchComp search={search} filter={route.params ? route.params.filter : [] } clubList={clubList}/> }
+          {dashboard ? <DashboardComp userData={userData} />: <SearchComp nav={navigation} search={search} filter={route.params ? route.params.filter : [] } clubList={clubList}/> }
       </SafeAreaView>
   );
 }
