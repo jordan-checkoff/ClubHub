@@ -69,19 +69,18 @@ const ClubScreen = ({route, navigation}) => {
         <SafeAreaView style={styles.container}>
             <View style={styles.clubscreen}>
                 <View style={styles.clubHub}>
-                    <TouchableOpacity onPress={() => navigation.navigate('SearchScreen')}><Text>back</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.goBack()}><Text>back</Text></TouchableOpacity>
                     <Text style ={styles.heading}>{club.name}</Text>
-                    <Image style={styles.profile}source={require('../assets/boomshaka.png')} />
+                    <Image style={styles.profile }source={{uri: club.icon}} />
                 </View>
                 <View style={styles.info}>
                     <Text style ={styles.title}>{club.name} Northwestern University</Text>
                     <Text style ={styles.username}>@{club.name}</Text>
-                    <Text style ={styles.type}>Dance</Text>
+                    <Text style ={styles.type}>{club.type}</Text>
                     <TouchableOpacity onPress={follow}><Text>{following ? 'Following' : 'Follow'}</Text></TouchableOpacity>
                     <Text>{admin && "Admin"}</Text>
                     {admin && <TouchableOpacity onPress={() => navigation.navigate("EventScreen", {club: club.name})}><Text>Create Event</Text></TouchableOpacity>}
                     <Text style = {styles.info}>{club.description}</Text>
-                    <Text>Northwestern University's premier drum, dance, and rhythm ensemble.</Text>
                 </View>
                 <View style ={styles.followers}>
                     <Text style ={{ fontWeight: 'bold' }}>127 </Text>

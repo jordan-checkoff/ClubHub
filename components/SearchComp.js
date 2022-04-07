@@ -4,26 +4,10 @@ import { getDatabase, ref, child, get } from "firebase/database";
 import { StyleSheet, View, SafeAreaView, Image, TouchableOpacity, Text, KeyboardAvoidingView } from 'react-native';
 import ClubList from './ClubList';
 
-const SearchScreen = ({navigation, route, search}) => {
+const SearchScreen = ({nav, search, clubList, filter}) => {
 
-    const [clubList, setClubList] = useState([]);
-  
-    useEffect(() => {
-      const dbRef = ref(getDatabase(app));
-  
-      get(child(dbRef, 'clubList')).then((snapshot) => {
-        if (snapshot.exists()) {
-          setClubList(snapshot.val());
-        } else {
-          console.log("No data available");
-        }
-      }).catch((error) => {
-        console.error(error);
-      });
-    })
-    
     const view = (club) => {
-      navigation.navigate('ClubScreen', { club });
+      nav.navigate('ClubScreen', { club });
     };
   
     return (
@@ -31,7 +15,7 @@ const SearchScreen = ({navigation, route, search}) => {
         behavior="padding"
         style={styles.container}>
             <SafeAreaView style={styles.container}>
-            <ClubList view={view} clubs={clubList} search={search} filter={[]}  /> 
+            <ClubList view={view} clubs={clubList} search={search} filter={filter}  /> 
         </SafeAreaView>
         </KeyboardAvoidingView>
     );
