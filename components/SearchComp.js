@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import { app } from '../firebase.js';
 import { getDatabase, ref, child, get } from "firebase/database";
-import { StyleSheet, View, SafeAreaView, Image, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, View, SafeAreaView, Image, TouchableOpacity, Text, KeyboardAvoidingView } from 'react-native';
 import ClubList from './ClubList';
-
 
 const SearchScreen = ({nav, search, clubList, filter}) => {
 
@@ -12,9 +11,13 @@ const SearchScreen = ({nav, search, clubList, filter}) => {
     };
   
     return (
-        <SafeAreaView style={styles.container}>
+        <KeyboardAvoidingView
+        behavior="padding"
+        style={styles.container}>
+            <SafeAreaView style={styles.container}>
             <ClubList view={view} clubs={clubList} search={search} filter={filter}  /> 
         </SafeAreaView>
+        </KeyboardAvoidingView>
     );
   }
   
