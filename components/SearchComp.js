@@ -40,6 +40,7 @@ const SearchScreen = ({navigation, route, search}) => {
         backgroundColor: '#c65fd9',
         alignItems: 'center',
         justifyContent: 'center',
+        width: '95%',
       }
     });
   
