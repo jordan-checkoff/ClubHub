@@ -8,6 +8,7 @@ import SearchComp from '../components/SearchComp';
 import UserContext from '../UserContext';
 
 
+
 const SearchScreen = ({navigation, route}) => {
 
   const user = useContext(UserContext);
@@ -74,6 +75,9 @@ const styles = StyleSheet.create({
       backgroundColor: '#c65fd9',
       alignItems: 'center',
       justifyContent: 'center',
+    },
+    scrolling:{
+      height: 100,
     },
     searchBox: {
       width: '100%',
