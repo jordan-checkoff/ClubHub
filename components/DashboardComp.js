@@ -20,6 +20,8 @@ const DashboardScreen = ({navigation, userData}) => {
     }
 
 
+
+
 return (
         <SafeAreaView style={styles.container}>
             <View style={styles.followListContainer}> 

@@ -12,11 +12,12 @@ import UserContext from '../UserContext';
 const SearchScreen = ({navigation, route}) => {
 
   const user = useContext(UserContext);
-  const [data, updateData] = useState({clubList: {}, userData: {}});
+  const [data, updateData] = useState({clubList: {}, userData: {}, eventList: {}});
 
   useEffect(() => {
     let userData = {};
     let clubList = {};
+    let eventList = [];
     const dbRef = ref(getDatabase(app));
 
     get(child(dbRef, 'clubList')).then((snapshot) => {
@@ -29,10 +30,20 @@ const SearchScreen = ({navigation, route}) => {
         get(child(dbRef, 'users/' + user)).then((snapshot) => {
           if (snapshot.exists()) {
             userData = snapshot.val();
-            updateData({clubList: clubList, userData: userData});
           } else {
             console.log("No data available");
           }
+
+          userData.following.map((key, club) => {
+            get(child(dbRef, 'events/' + club)).then((snapshot) => {
+              if (snapshot.exists()) {
+                eventList.push(snapshot.val())
+                }
+              }
+            }
+          })
+          get(child(dbRef, 'events/' + cl))
+
         }).catch((error) => {
           console.error(error);
         });
