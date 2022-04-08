@@ -12,36 +12,54 @@ import UserContext from '../UserContext';
 const SearchScreen = ({navigation, route}) => {
 
   const user = useContext(UserContext);
-  const [data, updateData] = useState({clubList: {}, userData: {}});
+  const [data, updateData] = useState({clubList: {}, userData: {}, events: {}, pageLoaded: false});
 
   useEffect(() => {
-    let userData = {};
-    let clubList = {};
-    const dbRef = ref(getDatabase(app));
+    if (!data.pageLoaded) {
+      let userData = {};
+      let clubList = {};
+      let events = {};
+      const dbRef = ref(getDatabase(app));
 
-    get(child(dbRef, 'clubList')).then((snapshot) => {
-      if (snapshot.exists()) {
-        clubList = snapshot.val();
-      } else {
-        console.log("No data available");
-      }
+      get(child(dbRef, 'clubList')).then((snapshot) => {
+        if (snapshot.exists()) {
+          clubList = snapshot.val();
+        } else {
+          console.log("No data available");
+        }
 
-        get(child(dbRef, 'users/' + user)).then((snapshot) => {
-          if (snapshot.exists()) {
-            userData = snapshot.val();
-            updateData({clubList: clubList, userData: userData});
-          } else {
-            console.log("No data available");
-          }
-        }).catch((error) => {
-          console.error(error);
-        });
+          get(child(dbRef, 'users/' + user)).then((snapshot) => {
+            if (snapshot.exists()) {
+              userData = snapshot.val();
+              console.log(snapshot.val())
+              
+              var followingList = userData.following
+              Object.values(followingList).map( (clubDetails) => {
+                var clubName = clubDetails.name
+                get(child(dbRef, 'events/' + clubName)).then((snapshot) => {
+                  if (snapshot.exists()) {
+                    console.log(snapshot.val())
+                    events[clubName] = snapshot.val()
+                  }
+                })
+              }
+              )
 
-    }).catch((error) => {
-      console.error(error);
-    });
+              
+              updateData({clubList: clubList, userData: userData, events: events, pageLoaded: true});
+              console.log(data.events)
+            } else {
+              console.log("No data available");
+            }
+          }).catch((error) => {
+            console.error(error);
+          });
 
-  })
+      }).catch((error) => {
+        console.error(error);
+      });
+    }
+    })
 
   const [search, updateSearch] = useState('');
   const [dashboard, updateDashboard] = useState(true);
