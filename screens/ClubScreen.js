@@ -74,26 +74,23 @@ const ClubScreen = ({route, navigation}) => {
                     <Image style={styles.profile }source={{uri: club.icon}} />
                 </View>
                 <View style={styles.info}>
-                    <Text style ={styles.title}>{club.name} Northwestern University</Text>
-                    <Text style ={styles.username}>@{club.name}</Text>
-                    <Text style ={styles.type}>{club.type}</Text>
-                    <TouchableOpacity onPress={follow}><Text>{following ? 'Following' : 'Follow'}</Text></TouchableOpacity>
+                    <Text style ={styles.title}>{club.name}</Text>
+                    <View style ={styles.typeBox}>
+                        <Text style ={styles.type}>{club.type}</Text>
+                    </View>
+                    <TouchableOpacity style ={styles.followBox} onPress={follow}><Text>{following ? 'Following' : 'Follow'}</Text></TouchableOpacity>
                     <Text>{admin && "Admin"}</Text>
                     {admin && <TouchableOpacity onPress={() => navigation.navigate("EventScreen", {club: club.name})}><Text>Create Event</Text></TouchableOpacity>}
-                    <Text style = {styles.info}>{club.description}</Text>
-                </View>
-                <View style ={styles.followers}>
-                    <Text style ={{ fontWeight: 'bold' }}> {club.location} </Text>
-                    <Text style ={styles.member}>members </Text>
-                    <Text style ={{ fontWeight: 'bold' }}>284 </Text>
-                    <Text style ={styles.follower}>followers</Text>
-                </View>
-                <View style ={styles.setting}>
-                    <Image style={styles.location}source={require('../assets/745228.png')} />
-                    <Text style ={styles.member}>Tech LR2 </Text>
-                    <Image style={styles.location}source={require('../assets/ff22c66b5f7d9b60ec981b2f7411ed0d.png')} />
-                    <Text style ={styles.follower}>Periodically</Text>
-                </View>
+                    <View style ={styles.box}>
+                        <Text >{club.description}</Text>
+                        <View style ={styles.followers}>
+                            <Text style ={{ fontWeight: 'bold' }}> {club.followers} </Text>
+                            <Text style ={styles.follower}>followers</Text>
+                            <Image style={styles.location}source={require('../assets/745228.png')} />
+                            <Text style ={styles.member}>{club.location} </Text>
+                        </View>
+                    </View>
+                </View>  
             </View>   
         </SafeAreaView>
     )
@@ -123,7 +120,8 @@ const styles = StyleSheet.create({
     },
     info:{
         marginTop: 30,
-        marginLeft: 30
+        marginLeft: 15,
+        marginRight: 15
     },
     title:{
         fontSize: 22,
@@ -134,16 +132,39 @@ const styles = StyleSheet.create({
     username:{
         fontSize: 15,
     },
-    type:{
-        backgroundColor:'#90EE90',
+    typeBox:{
+        backgroundColor:'#C7D0EE',
         height:17,
-        width:50,
+        alignSelf: 'flex-start',
         textAlign: 'center',
-        borderRadius: 30,
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: '#C7D0EE',
+    },
+    followBox:{
+        marginTop: 5,
+        backgroundColor:'#ABD9DF',
+        height:17,
+        alignSelf: 'flex-start',
+        textAlign: 'center',
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: '#C7D0EE',
+    },
+    type:{
+        paddingLeft: 3,
+        paddingRight: 3,
+    },
+    box:{
+        borderWidth: 1,
+        padding: 7,
+        borderRadius: 5,
+        borderColor: '#B6D0E2',
+        backgroundColor: '#B6D0E2',
     },
     followers:{
         marginTop:11,
-        marginLeft:30,
+        marginLeft: 2,
         flexDirection:'row'
     },
     member:{
@@ -157,6 +178,7 @@ const styles = StyleSheet.create({
     location:{
         height:20,
         width: 20,
+        paddingLeft: 10,
     },
 })
 
