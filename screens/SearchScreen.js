@@ -31,23 +31,21 @@ const SearchScreen = ({navigation, route}) => {
           get(child(dbRef, 'users/' + user)).then((snapshot) => {
             if (snapshot.exists()) {
               userData = snapshot.val();
-              console.log(snapshot.val())
               
-              var followingList = userData.following
-              Object.values(followingList).map( (clubDetails) => {
-                var clubName = clubDetails.name
-                get(child(dbRef, 'events/' + clubName)).then((snapshot) => {
-                  if (snapshot.exists()) {
-                    console.log(snapshot.val())
-                    events[clubName] = snapshot.val()
-                  }
-                })
-              }
-              )
+              var followingList = userData.following;
+              if (followingList) {
+                Object.values(followingList).map( (clubDetails) => {
+                  var clubName = clubDetails.name;
+                  get(child(dbRef, 'events/' + clubName)).then((snapshot) => {
+                    if (snapshot.exists()) {
+                      events[clubName] = snapshot.val();
+                    }
+                  })
+                }
+                )
 
-              
+              }
               updateData({clubList: clubList, userData: userData, events: events, pageLoaded: true});
-              console.log(data.events)
             } else {
               console.log("No data available");
             }

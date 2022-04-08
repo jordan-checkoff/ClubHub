@@ -12,8 +12,7 @@ const ClubScreen = ({route, navigation}) => {
     const db = getDatabase();
     const club = route.params.club;
     const user = useContext(UserContext);
-    const [following, setFollowing] = useState(false);
-    const [admin, setAdmin] = useState(false);
+    const [data, setData] = useState({following: false, admin: false, pageLoaded: false})
 
     const isFollowing = (objectClubs) => {
         var result = false;
@@ -36,63 +35,57 @@ const ClubScreen = ({route, navigation}) => {
     }
 
     useEffect(() => {
-        const dbRef = ref(getDatabase(app));
-        if (user) {
-            get(child(dbRef, 'users/' + user + '/following')).then((snapshot) => {
-                if (snapshot.exists()) {
-                    console.log(Object.entries(snapshot.val()))
-                    if (isFollowing(snapshot.val())) {
-                        setFollowing(true);
-                    } else {
-                        setFollowing(false);
-                    }
-                } else {
-                    setFollowing(false);
-                }
-            }).catch((error) => {
-                console.error(error);
-            });
-            get(child(dbRef, "users/" + user + '/admin')).then((snapshot) => {
-                if (snapshot.exists()) {
-                    if (Object.values(snapshot.val()).includes(club.name)) {
-                        setAdmin(true);
-                    } else {
-                        setAdmin(false);
-                    }
-                }
-            }).catch((error) => {
-                console.error(error);
-            });
-        }
-      })
-
-    const follow = () => {
-        if (following) {
+        if (!data.pageLoaded) {
+            var following;
+            var admin;
             const dbRef = ref(getDatabase(app));
-            get(child(dbRef, 'users/' + user + '/following')).then((snapshot) => {
-                if (snapshot.exists()) {
-                    let following = snapshot.val();
-                    let key = findKey(snapshot.val());
-                    const postListRef = ref(db, 'users/' + user + '/following/' + key);
-                    remove(postListRef);
-                }
-            }).catch((error) => {
-                console.error(error);
-            })
-            setFollowing(false);
-        } else {
-            const postListRef = ref(db, 'users/' + user + '/following');
-            const newPostRef = push(postListRef);
-            set(newPostRef, club);
-            setFollowing(true);
-        }
+            if (user) {
+                get(child(dbRef, 'users/' + user + '/following')).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        following = isFollowing(snapshot.val());
+                        get(child(dbRef, "users/" + user + '/admin')).then((snapshot) => {
+                            if (snapshot.exists()) {
+                                admin = Object.values(snapshot.val()).includes(club.name);
+                                setData({following: following, admin: admin, pageLoaded: true});
+                            }
+                        }).catch((error) => {
+                            console.error(error);
+                        });
+
+                    }
+                }).catch((error) => {
+                    console.error(error);
+                });
+                
+            }
+    }})
+
+        const follow = () => {
+            if (data.following) {
+                const dbRef = ref(getDatabase(app));
+                get(child(dbRef, 'users/' + user + '/following')).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        let key = findKey(snapshot.val());
+                        const postListRef = ref(db, 'users/' + user + '/following/' + key);
+                        remove(postListRef);
+                    }
+                }).catch((error) => {
+                    console.error(error);
+                })
+                setData({following: false, admin: data.admin, pageLoaded: data.pageLoaded});
+            } else {
+                const postListRef = ref(db, 'users/' + user + '/following');
+                const newPostRef = push(postListRef);
+                set(newPostRef, club);
+                setData({following: true, admin: data.admin, pageLoaded: data.pageLoaded});
+            }
     }
 
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.clubscreen}>
                 <View style={styles.clubHub}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}><Text>back</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.replace("SearchScreen")}><Text>back</Text></TouchableOpacity>
                     <Text style ={styles.heading}>{club.name}</Text>
                     <Image style={styles.profile }source={{uri: club.icon}} />
                 </View>
@@ -101,9 +94,9 @@ const ClubScreen = ({route, navigation}) => {
                     <View style ={styles.typeBox}>
                         <Text style ={styles.type}>{club.type}</Text>
                     </View>
-                    <TouchableOpacity style ={styles.followBox} onPress={follow}><Text>{following ? 'Following' : 'Follow'}</Text></TouchableOpacity>
-                    <Text>{admin && "Admin"}</Text>
-                    {admin && <TouchableOpacity onPress={() => navigation.navigate("EventScreen", {club: club.name})}><Text>Create Event</Text></TouchableOpacity>}
+                    <TouchableOpacity style ={styles.followBox} onPress={follow}><Text>{data.following ? 'Following' : 'Follow'}</Text></TouchableOpacity>
+                    <Text>{data.admin && "Admin"}</Text>
+                    {data.admin && <TouchableOpacity onPress={() => navigation.navigate("EventScreen", {club: club.name})}><Text>Create Event</Text></TouchableOpacity>}
                     <View style ={styles.box}>
                         <Text >{club.description}</Text>
                         <View style ={styles.followers}>
