@@ -6,6 +6,8 @@ import UserContext from '../UserContext';
 import {app} from '../firebase'
 import { updateCurrentUser } from 'firebase/auth';
 
+
+
 const ClubScreen = ({route, navigation}) => {
     const db = getDatabase();
     const club = route.params.club;
@@ -13,12 +15,33 @@ const ClubScreen = ({route, navigation}) => {
     const [following, setFollowing] = useState(false);
     const [admin, setAdmin] = useState(false);
 
+    const isFollowing = (objectClubs) => {
+        var result = false;
+        Object.entries(objectClubs).map((array) => {
+            if (array[1].name == club.name) {
+                result = true;
+            }
+        })
+        return result;
+    };
+
+    const findKey = (objectClubs) => {
+        var key
+        Object.entries(objectClubs).map((array) => {
+            if (array[1].name == club.name) {
+                key = array[0];
+            }
+        })
+        return key;
+    }
+
     useEffect(() => {
         const dbRef = ref(getDatabase(app));
         if (user) {
             get(child(dbRef, 'users/' + user + '/following')).then((snapshot) => {
                 if (snapshot.exists()) {
-                    if (Object.values(snapshot.val()).includes(club.name)) {
+                    console.log(Object.entries(snapshot.val()))
+                    if (isFollowing(snapshot.val())) {
                         setFollowing(true);
                     } else {
                         setFollowing(false);
@@ -49,7 +72,7 @@ const ClubScreen = ({route, navigation}) => {
             get(child(dbRef, 'users/' + user + '/following')).then((snapshot) => {
                 if (snapshot.exists()) {
                     let following = snapshot.val();
-                    let key = Object.keys(following).find(key => following[key] === club.name);
+                    let key = findKey(snapshot.val());
                     const postListRef = ref(db, 'users/' + user + '/following/' + key);
                     remove(postListRef);
                 }
