@@ -28,7 +28,7 @@ return (
                     <Text style={styles.followingTopText}>Following</Text>
                 </View>
                 <ScrollView style={styles.followListContent}>
-                    <FollowingBox following={userData.following}/>
+                    <FollowingBox following={userData.following} navigation={navigation}/>
                 </ScrollView>
             </View>
             <View style={styles.eventListContainer}> 
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     followListContainer: {
         borderRadius: 10,
         backgroundColor: 'white',
-        height: 200,
+        height: 250,
         width: '95%',
     },
     followListTop:{

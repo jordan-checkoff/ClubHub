@@ -60,7 +60,7 @@ const ClubScreen = ({route, navigation}) => {
         } else {
             const postListRef = ref(db, 'users/' + user + '/following');
             const newPostRef = push(postListRef);
-            set(newPostRef, club.name);
+            set(newPostRef, club);
             setFollowing(true);
         }
     }
@@ -83,7 +83,7 @@ const ClubScreen = ({route, navigation}) => {
                     <Text style = {styles.info}>{club.description}</Text>
                 </View>
                 <View style ={styles.followers}>
-                    <Text style ={{ fontWeight: 'bold' }}>127 </Text>
+                    <Text style ={{ fontWeight: 'bold' }}> {club.location} </Text>
                     <Text style ={styles.member}>members </Text>
                     <Text style ={{ fontWeight: 'bold' }}>284 </Text>
                     <Text style ={styles.follower}>followers</Text>
