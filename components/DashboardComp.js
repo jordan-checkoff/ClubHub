@@ -24,9 +24,15 @@ const DashboardScreen = ({navigation, userData, events}) => {
 
 return (
         <SafeAreaView style={styles.container}>
+            <View style={styles.header}>
+                <Text style={styles.headerText}>CLUBHUB</Text>
+            </View>
+            <View style={styles.welcome}>
+                <Text style={styles.welcomeText}>{'Welcome, ' + userData.fname + ' ' + userData.lname}</Text>
+            </View>
             <View style={styles.followListContainer}> 
                 <View style={styles.followListTop}>
-                    <Text style={styles.followingTopText}>Following</Text>
+                    <Text style={styles.followingTopText}>following</Text>
                 </View>
                 <ScrollView style={styles.followListContent}>
                     <FollowingBox following={userData.following} navigation={navigation}/>
@@ -34,7 +40,7 @@ return (
             </View>
             <View style={styles.eventListContainer}> 
                 <View style={styles.followListTop}>
-                    <Text style={styles.followingTopText}>Events</Text>
+                    <Text style={styles.followingTopText}>events</Text>
                 </View>
                 <View style={styles.followListContent}>
                 <ScrollView>
@@ -43,8 +49,9 @@ return (
                 </View>
             </View>
             <View style={styles.extra}>
-                <Text>{'Hi ' + userData.fname + ' ' + userData.lname}</Text>
-                <TouchableOpacity onPress={mySignOut}><Text>Sign Out</Text></TouchableOpacity>
+                <View style={styles.signOutButton}>
+                    <TouchableOpacity onPress={mySignOut}><Text style={styles.signOutText}>sign out</Text></TouchableOpacity>
+                </View>
             </View>
         </SafeAreaView>
     );
@@ -53,12 +60,28 @@ return (
 const styles = StyleSheet.create({
     container:{
       flex: 1,
-      backgroundColor: '#c65fd9',
+      backgroundColor: '#BBADFF',
       alignItems: 'center',
       justifyContent: 'center',
       width: '95%',
     },
-
+    header:{
+        paddingTop: 10,
+    },
+    headerText:{
+        fontFamily: 'Futura-Medium',
+        fontWeight: 'bold',
+        fontSize: 30,
+        textAlign: 'center',
+    },
+    welcome:{
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingBottom: 40,
+    },
+    welcomeText:{
+        fontFamily: "Futura-Medium",
+    },
     followListContainer: {
         borderRadius: 10,
         backgroundColor: 'white',
@@ -74,16 +97,14 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',    
     },
     followingTopText: {
+        fontFamily: "Futura-Medium",
         color: 'white',
         alignItems: 'center',
     },
     followListContent:{
-        backgroundColor: '#AAC9CE',
+        backgroundColor: 'white',
         width: '100%',
         height: '100%'
-    },
-    extra:{
-        marginTop: 30,
     },
     eventListContainer:{
         margin: 50,
@@ -104,6 +125,19 @@ const styles = StyleSheet.create({
     clubListBlock1:{
         flex: 1,
         justifyContent: 'center',
+    },
+    signOutButton:{
+        width: 150,
+        height: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 20,
+        backgroundColor: 'black',
+        borderRadius: 10,
+    },
+    signOutText:{
+        color: 'white',
+        fontFamily: "Futura-Medium",
     }
 });
 export default DashboardScreen;

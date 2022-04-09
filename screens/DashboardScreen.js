@@ -67,7 +67,7 @@ const DashboardScreen = ({navigation}) => {
             </View>
             <View style={styles.extra}>
                 <Text>{'Hi ' + userData.fname + ' ' + userData.lname}</Text>
-                <TouchableOpacity onPress={mySignOut}><Text>Sign Out</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={mySignOut}><Text>Sign Out</Text></TouchableOpacity>
             </View>
             {/* <View>{userData.following.map((name) => <Text key={name}>{name}</Text>)}</View> */}
         </SafeAreaView>
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     followListContent:{
-        backgroundColor: '#AAC9CE',
+        backgroundColor: 'white',
         width: '100%',
         height: '100%'
     },
@@ -139,6 +139,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         height: 200,
         width: '95%',
-    }
+    },
 });
 export default DashboardScreen;

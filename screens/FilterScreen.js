@@ -10,7 +10,7 @@ const FilterScreen = ({navigation}) => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.titleBox}>
-                <Text style={styles.title}>Filter Search</Text>
+                <Text style={styles.title}>FILTER SEARCH</Text>
                 <TouchableOpacity style={styles.buttonWrapper} onPress={() => navigation.navigate('SearchScreen', {filter})}>
                     <Image style={styles.filterButton} source={{uri: "https://icons-for-free.com/iconfiles/png/512/x-1321215629555778185.png"}}/>
                 </TouchableOpacity>
@@ -23,11 +23,13 @@ const FilterScreen = ({navigation}) => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#c65fd9',
+      backgroundColor: '#BBADFF',
     },
     title: {
+        fontFamily: "Futura-Medium",
+        fontWeight: 'bold',
         fontSize: 30,
-        color: 'white',
+        color: 'black',
         flex: 9,
         textAlign: 'center',
         position: 'relative',

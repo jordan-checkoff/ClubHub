@@ -31,7 +31,8 @@ const styles = StyleSheet.create({
       marginBottom: 20,
       marginLeft: "1.666%",
       marginRight: "1.666%",
-      backgroundColor: 'lightgray',
+      backgroundColor: 'white',
+      borderRadius: 10,
     },
     selectedFilterButton: {
         width: "30%",
@@ -41,10 +42,12 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         marginLeft: "1.666%",
         marginRight: "1.666%",
-        backgroundColor: 'gray',
+        backgroundColor: '#757BC8',
+        borderRadius: 10,
       },
       text: {
           fontSize: 12,
+          color: 'black',
       }
   })
 

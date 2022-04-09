@@ -24,7 +24,7 @@ const SearchScreen = ({nav, search, clubList, filter}) => {
   const styles = StyleSheet.create({
       container: {
         flex: 1,
-        backgroundColor: '#c65fd9',
+        backgroundColor: '#BBADFF',
         alignItems: 'center',
         justifyContent: 'center',
         width: '95%',

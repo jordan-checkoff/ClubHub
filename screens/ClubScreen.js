@@ -85,20 +85,20 @@ const ClubScreen = ({route, navigation}) => {
         <SafeAreaView style={styles.container}>
             <View style={styles.clubscreen}>
                 <View style={styles.clubHub}>
-                    <TouchableOpacity onPress={() => navigation.replace("SearchScreen")}><Text>back</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.replace("SearchScreen")}><Text style={styles.backText}>←</Text></TouchableOpacity>
                     <Text style ={styles.heading}>{club.name}</Text>
                     <Image style={styles.profile }source={{uri: club.icon}} />
                 </View>
                 <View style={styles.info}>
-                    <Text style ={styles.title}>{club.name}</Text>
+                    <View><Text style ={styles.title}>{club.name}</Text>
                     <View style ={styles.typeBox}>
                         <Text style ={styles.type}>{club.type}</Text>
                     </View>
-                    <TouchableOpacity style ={styles.followBox} onPress={follow}><Text>{data.following ? 'Following' : 'Follow'}</Text></TouchableOpacity>
+                    <TouchableOpacity style ={styles.followBox} onPress={follow}><Text style={styles.followText}>{data.following ? 'Following' : 'Follow'}</Text></TouchableOpacity>
                     <Text>{data.admin && "Admin"}</Text>
                     {data.admin && <TouchableOpacity onPress={() => navigation.navigate("EventScreen", {club: club.name})}><Text>Create Event</Text></TouchableOpacity>}
                     <View style ={styles.box}>
-                        <Text >{club.description}</Text>
+                        <Text>{club.description}</Text>
                         <View style ={styles.followers}>
                             <Text style ={{ fontWeight: 'bold' }}> {club.followers} </Text>
                             <Text style ={styles.follower}>followers</Text>
@@ -116,11 +116,19 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
     },
+    backText:{
+        color: 'black',
+        fontSize: 20,
+        fontWeight: 'bold',
+        paddingLeft: 8,
+        paddingTop: 2,
+    },
     clubHub:{
-        backgroundColor: "#B6D0E2",
+        backgroundColor: "#BBADFF",
         height: 100,
     },
     heading:{
+        fontFamily: "Futura-Medium",
         fontSize: 20,
         color: 'black',
         textAlign: 'center',
@@ -142,15 +150,15 @@ const styles = StyleSheet.create({
     title:{
         fontSize: 22,
         fontWeight:"bold",
-        marginTop: 30,
-        
+        marginTop: 50,
+        fontFamily: "Futura-Medium",
     },
     username:{
         fontSize: 15,
     },
     typeBox:{
         backgroundColor:'#C7D0EE',
-        height:17,
+        height:20,
         alignSelf: 'flex-start',
         textAlign: 'center',
         borderRadius: 5,
@@ -160,23 +168,30 @@ const styles = StyleSheet.create({
     followBox:{
         marginTop: 5,
         backgroundColor:'#ABD9DF',
-        height:17,
+        height: 20,
+        paddingLeft: 3,
+        paddingRight: 3,
         alignSelf: 'flex-start',
         textAlign: 'center',
         borderRadius: 5,
         borderWidth: 1,
-        borderColor: '#C7D0EE',
+        borderColor: '#ABD9DF',
+    },
+    followText:{
+        fontFamily: "Futura-Medium"
     },
     type:{
         paddingLeft: 3,
         paddingRight: 3,
+        paddingBottom: 3,
+        fontFamily: "Futura-Medium",
     },
     box:{
         borderWidth: 1,
         padding: 7,
         borderRadius: 5,
-        borderColor: '#B6D0E2',
-        backgroundColor: '#B6D0E2',
+        borderColor: '#BBADFF',
+        backgroundColor: '#BBADFF',
     },
     followers:{
         marginTop:11,
