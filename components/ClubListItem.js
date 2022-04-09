@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     flex: 4,
   },
   clubListName: {
+    fontFamily: "Futura-Medium",
     fontWeight: 'bold',
     marginBottom: 10,
   },

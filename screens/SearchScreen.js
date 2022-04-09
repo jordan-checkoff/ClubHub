@@ -73,7 +73,7 @@ const SearchScreen = ({navigation, route}) => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#c65fd9',
+      backgroundColor: '#BBADFF',
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -115,8 +115,8 @@ const styles = StyleSheet.create({
       width: '100%',
     },
     filterButton: {
-      width: 20,
-      height: 20
+      width: 17,
+      height: 17,
     }
   });
 

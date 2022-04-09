@@ -35,8 +35,9 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     followingText:{
+        fontFamily: "Futura-Medium",
         fontWeight: 'bold',
-        fontSize:17,
+        fontSize: 15,
         paddingTop: 4,
         paddingLeft: 10,
     },
@@ -54,11 +55,11 @@ const styles = StyleSheet.create({
         height: 50,
       },
     clubListBlock1: {
-    width: 20,
-    height: 20,
-    justifyContent: 'center',
-    flex:1,
-    paddingTop: 6,
+        width: 20,
+        height: 20,
+        justifyContent: 'center',
+        flex:1,
+        paddingTop: 6,
     },
     clubListBlock2: {
         flex: 4,

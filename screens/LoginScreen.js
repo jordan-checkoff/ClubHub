@@ -26,9 +26,9 @@ const LoginScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-        <View style={styles.loginbox}>
+        <View style={[styles.loginbox, styles.shadowprop]}>
             <ErrorText message={error} />
-            <Text style={styles.logintext}>Login</Text>
+            <Text style={styles.logintext}>CLUBHUB</Text>
             <LoginInput field="Email" fieldvar={email} fieldupdate={updateEmail} />
             <LoginInput field="Password" fieldvar={password} fieldupdate={updatePassword} />
             <TouchableOpacity style={styles.loginbutton} onPress={() => login(email, password)}><Text>Login</Text></TouchableOpacity>
@@ -41,34 +41,44 @@ const LoginScreen = ({navigation}) => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: 'lightgray',
+      backgroundColor: '#BBADFF',
       alignItems: 'center',
       justifyContent: 'center',
     },
     logintext: {
+      fontFamily: 'Futura-Medium',
+      fontWeight: 'bold',
       fontSize: 30,
       textAlign: 'center',
-      marginBottom: 30  
+      marginBottom: 30
     },
     loginbox: {
         backgroundColor: 'white',
         width: '80%',
-        padding: 20
+        padding: 20,
+        borderColor: 'white',
+        borderRadius: 10,
     },
     buttoncontainer: {
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
     loginbutton: {
-        backgroundColor: '#c65fd9',
+        backgroundColor: '#E0C3FC',
         padding: 10,
         textAlign: 'center',
         color: 'white',
         marginBottom: 20
     },
     link: {
-        color: 'blue',
+        color: '#757BC8',
         textAlign: 'center'
+    },
+    shadowprop: {
+      shadowColor: '#171717',
+      shadowOffset: {width: -3, height: 5},
+      shadowOpacity: 0.2,
+      shadowRadius: 3,
     }
   });
 
