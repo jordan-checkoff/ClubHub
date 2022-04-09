@@ -4,11 +4,12 @@ import { getAuth, signOut } from "firebase/auth";
 import { getDatabase, ref, child, get } from "firebase/database";
 import { StyleSheet, Text, TouchableOpacity, SafeAreaView, View, Pressable, ScrollView, Image } from 'react-native';
 import FollowingBox from './followingBox';
+import EventBox from './EventBox';
 
 
 
 
-const DashboardScreen = ({navigation, userData, view, club}) => {
+const DashboardScreen = ({navigation, userData, events}) => {
     const auth = getAuth();
 
     const mySignOut = () => {
@@ -42,6 +43,9 @@ return (
                     <Text style={styles.followingTopText}>events</Text>
                 </View>
                 <View style={styles.followListContent}>
+                <ScrollView>
+                        <EventBox events={events} following={userData.following} />
+                    </ScrollView>
                 </View>
             </View>
             <View style={styles.extra}>

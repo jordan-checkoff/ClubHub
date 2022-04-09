@@ -15,7 +15,7 @@ const FollowingBox = ({following, navigation}) => {
     return (
         <View style={styles.followingClub}>
             {following && Object.values(following).map((club) => 
-            <TouchableOpacity style={styles.clubListItem} onPress={() => view(club)}>
+            <TouchableOpacity style={styles.clubListItem} onPress={() => view(club)} key={club.name}>
                 <View style={styles.clubListBlock1}>
                     <Image style={styles.clubListImage} source={{uri: club.icon}}></Image>
                 </View>
