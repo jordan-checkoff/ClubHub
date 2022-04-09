@@ -107,7 +107,8 @@ const ClubScreen = ({route, navigation}) => {
                         </View>
                     </View>
                 </View>  
-            </View>   
+            </View>
+            </View>    
         </SafeAreaView>
     )
 }
