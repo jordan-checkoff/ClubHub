@@ -8,40 +8,72 @@ import SearchComp from '../components/SearchComp';
 import UserContext from '../UserContext';
 
 
-
 const SearchScreen = ({navigation, route}) => {
 
   const user = useContext(UserContext);
-  const [data, updateData] = useState({clubList: {}, userData: {}});
+  const [data, updateData] = useState({clubList: {}, userData: {}, events: {}, pageLoaded: false});
+
+  const dbRef = ref(getDatabase(app));
+//   const databaseRecursion = (clubList, userData, list, length, events) => {
+//     if (length == 0) {
+//       updateData({clubList: clubList, userData: userData, events: databaseRecursion(list, length, {}), pageLoaded: true});
+//     } else {
+//       if (list[0][1]) {
+//     get(child(dbRef, 'events/' + list[0][1].name)).then((snapshot) => {
+//       if (snapshot.exists()) {
+//         events[list[0][1].name] = {name: 5};
+//         list.shift();
+//         databaseRecursion(list, list.length, events);
+//       }
+//     }).catch((error) => {
+//       console.error(error);
+//     })
+//   }
+// }
+//   }
+
+//   const actualRecursion = (clubList, userData, list, length) => {
+//     updateData({clubList: clubList, userData: userData, events: databaseRecursion(list, length, {}), pageLoaded: true})
+//   }
 
   useEffect(() => {
-    let userData = {};
-    let clubList = {};
-    const dbRef = ref(getDatabase(app));
+    if (!data.pageLoaded) {
+      let userData = {};
+      let clubList = {};
 
-    get(child(dbRef, 'clubList')).then((snapshot) => {
-      if (snapshot.exists()) {
-        clubList = snapshot.val();
-      } else {
-        console.log("No data available");
-      }
+      get(child(dbRef, 'clubList')).then((snapshot) => {
+        if (snapshot.exists()) {
+          clubList = snapshot.val();
+        } else {
+          console.log("No data available");
+        }
 
-        get(child(dbRef, 'users/' + user)).then((snapshot) => {
-          if (snapshot.exists()) {
-            userData = snapshot.val();
-            updateData({clubList: clubList, userData: userData});
-          } else {
-            console.log("No data available");
-          }
-        }).catch((error) => {
-          console.error(error);
-        });
+          get(child(dbRef, 'users/' + user)).then((snapshot) => {
+            if (snapshot.exists()) {
+              userData = snapshot.val();
+              
+              var followingList = userData.following;
+              if (followingList) {
+                  get(child(dbRef, 'events/')).then((snapshot) => {
+                    if (snapshot.exists()) {
+                      updateData({clubList: clubList, userData: userData, events: snapshot.val(), pageLoaded: true});
+                    }
+                  }).catch((error) => {
+                    console.error(error);
+                  })
+              }
+            } else {
+              console.log("No data available");
+            }
 
+
+      }).catch((error) => {
+        console.error(error);
+      });
     }).catch((error) => {
       console.error(error);
     });
-
-  })
+    }})
 
   const [search, updateSearch] = useState('');
   const [dashboard, updateDashboard] = useState(true);
@@ -65,7 +97,7 @@ const SearchScreen = ({navigation, route}) => {
               />
               <TouchableOpacity onPress={() => navigation.navigate('FilterScreen')}><Image style={styles.filterButton} source={{uri: "https://cdn4.iconfinder.com/data/icons/basic-user-interface-4/32/Filter-512.png"}}/></TouchableOpacity>
           </View>
-          {dashboard ? <DashboardComp userData={data.userData} navigation={navigation}/>: <SearchComp nav={navigation} search={search} filter={route.params ? route.params.filter : [] } clubList={data.clubList}/> }
+          {dashboard ? <DashboardComp userData={data.userData} navigation={navigation} events={data.events}/>: <SearchComp nav={navigation} search={search} filter={route.params ? route.params.filter : [] } clubList={data.clubList}/> }
       </SafeAreaView>
   );
 }
