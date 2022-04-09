@@ -19,12 +19,14 @@ const EventBox = ({events, following}) => {
     };
 
     const thing = (x) => {
+        if (following != undefined) {
         if (isFollowing(following, x[0])) {
         return <View key={x[0]}>
             <Text style={styles.followingText}>{x[0]}</Text>
             {Object.entries(x[1]).map(thing2)}
         </View>
         }
+    }
     }
     
     const thing2 = (x) => {

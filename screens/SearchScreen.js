@@ -52,8 +52,6 @@ const SearchScreen = ({navigation, route}) => {
             if (snapshot.exists()) {
               userData = snapshot.val();
               
-              var followingList = userData.following;
-              if (followingList) {
                   get(child(dbRef, 'events/')).then((snapshot) => {
                     if (snapshot.exists()) {
                       updateData({clubList: clubList, userData: userData, events: snapshot.val(), pageLoaded: true});
@@ -61,7 +59,6 @@ const SearchScreen = ({navigation, route}) => {
                   }).catch((error) => {
                     console.error(error);
                   })
-              }
             } else {
               console.log("No data available");
             }
